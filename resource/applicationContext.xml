@@ -1,0 +1,31 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 通过一个<bean>标签设置类的信息,通过id属性为类起个标识. -->
+    <bean id="spring" class="com.jajahome.daoImpl.HelloSpringImpl">
+        <!-- 使用<property>标签注入属性 -->
+        <property name="info" value="传智播客"/>
+    </bean>
+    <!--类的初始化与销毁，作用域-->
+    <bean id="product" class="com.jajahome.model.Product" init-method="setUp" destroy-method="tearDown"
+          scope="singleton">
+        <property name="name" value="被子"/>
+    </bean>
+
+    <!-- Bean的生命周期==================================== -->
+    <bean id="customerSpring" class="com.jajahome.daoImpl.CustomerSpringImpl" init-method="setUp"
+          destroy-method="tearDown">
+        <property name="name" value="spring"/>
+    </bean>
+
+    <bean class="com.jajahome.daoImpl.MyBeanPostProcessor"/>
+
+    <!-- 构造方法的注入 -->
+    <bean id="redCar" class="com.jajahome.model.RedCar">
+        <constructor-arg name="name" value="宝马"/>
+        <constructor-arg name="price" value="1000000"/>
+    </bean>
+
+</beans>
