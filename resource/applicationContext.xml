@@ -1,8 +1,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!--1.4	IOC装配Bean  IOC:控制反转-->
     <!-- 通过一个<bean>标签设置类的信息,通过id属性为类起个标识. -->
     <bean id="spring" class="com.jajahome.daoImpl.HelloSpringImpl">
         <!-- 使用<property>标签注入属性 -->
@@ -27,5 +31,33 @@
         <constructor-arg name="name" value="宝马"/>
         <constructor-arg name="price" value="1000000"/>
     </bean>
+
+
+    <bean id="personInfo" class="com.jajahome.model.PersonInfo">
+        <property name="name" value="张三"/>
+    </bean>
+
+    <!-- SpEL写法  -->
+    <bean id="person" class="com.jajahome.model.Person">
+        <property name="name" value="#{personInfo.showName()}"/>
+        <property name="car" ref="redCar"/>
+    </bean>
+
+    <import resource="applicationContext2.xml"/>
+
+
+    <!--1.5	IOC装配Bean(注解方式)-->
+    <!--标签默认情况下自动扫描指定路径下的包-->
+    <context:component-scan base-package="com.jajahome"/>
+
+
+    <bean id="orderDao" class="com.jajahome.model.OrderDao"/>
+    <bean id="customerDao" class="com.jajahome.model.CustomerDao"/>
+    <bean id="customerServiceImpl" class="com.jajahome.daoImpl.CustomerServiceImpl">
+        <property name="customerDao" ref="customerDao"/>
+    </bean>
+
+
+    <bean id="userService" class="com.jajahome.model.UserService"/>
 
 </beans>
